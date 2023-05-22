@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.http import Http404
 
 # Create your views here.
-class register(APIView):
+class user(APIView):
      def post(self,request,format=None):
         serializer=UserRegister(data=request.data)
         data={}
@@ -30,14 +30,13 @@ class welcome(APIView):
         content={'user':str(request.user),'userid':str(request.user.id)}
         return Response(content)
     
-class userDetails(APIView):
-    
+class userDetails(APIView): 
     def get_object(self,pk):
         try:
             return User.objects.get(pk=pk)
         except:
             raise Http404
-           
+                
     def get(self,request,pk,format=None):
         userData=self.get_object(pk)
         serializer=UserDataSerializer(userData)
@@ -51,3 +50,11 @@ class userDetails(APIView):
             return Response(serializer.data)
         return Response({"message":'error','error':serializer.errors}) 
     
+ 
+    def delete(self, request, pk, format=None):
+        userData = self.get_object(pk)
+        userData.is_deleted = True
+        userData.save()
+        return Response({'message': "user soft deleted"})
+
+
