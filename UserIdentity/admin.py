@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import UserRole
 
-# Register your models here.
+@admin.register(UserRole)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('role_id', 'role_name', 'description')
