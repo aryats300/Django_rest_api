@@ -1,3 +1,4 @@
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import UserRole
@@ -13,7 +14,7 @@ class UserRegister(serializers.ModelSerializer):
 
 
     def save(self):
-        reg=User(
+        newUser=User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
 
@@ -23,9 +24,9 @@ class UserRegister(serializers.ModelSerializer):
 
         if password!=password2:
             raise serializers.ValidationError({'password':'password does not match'})
-        reg.set_password(password)
-        reg.save()
-        return reg
+        newUser.set_password(password)
+        newUser.save()
+        return newUser
     
 
 class UserDataSerializer(serializers.ModelSerializer):
