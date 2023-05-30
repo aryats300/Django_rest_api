@@ -3,4 +3,4 @@ from .models import Upload
 
 @admin.register(Upload)
 class UploadAdmin(admin.ModelAdmin):
-    list_display = ('file','remarks')
+    list_display = ('file_id','file','remarks')

@@ -24,7 +24,7 @@ class UserRoleDetailsAPIView(APIView):
         try:
             return UserRole.objects.get(role_id=role_id)
         except UserRole.DoesNotExist:
-            raise Http404("User profile does not exist.")
+            raise Http404("User role does not exist.")
 
     def get(self, request, role_id, format=None):
         user_profile = self.get_object(role_id)

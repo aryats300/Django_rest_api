@@ -4,4 +4,4 @@ from .models import Upload
 class UploadSerializer(serializers.ModelSerializer):
   class Meta():
     model = Upload
-    fields = ('file','remarks')
+    fields = ('file_id','file','remarks')

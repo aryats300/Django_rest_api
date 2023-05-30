@@ -1,7 +1,11 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UploadSerializer
+from .models import Upload
+
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 class UploadAPIView(APIView):
@@ -17,6 +21,15 @@ class UploadAPIView(APIView):
             return Response(serializer.data)
         
         return Response(serializer.errors, status=400)
+
+class DownloadAPIView(APIView):
+  
+    def get(self, request, file_id, format=None):
+        upload = get_object_or_404(Upload, file_id=file_id)
+        response = HttpResponse(upload.file, content_type='image/jpeg')
+        response['Content-Disposition'] = f'attachment; filename="{upload.file.name}"'
+        return response
+
 
 
 
