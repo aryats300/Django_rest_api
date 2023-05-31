@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UploadSerializer
 from .models import Upload
+from rest_framework.permissions import IsAuthenticated
+# from django.urls import reverse
 
 from django.shortcuts import get_object_or_404
 
@@ -23,13 +25,26 @@ class UploadAPIView(APIView):
         return Response(serializer.errors, status=400)
 
 class DownloadAPIView(APIView):
-  
+
+    # permission_classes = (IsAuthenticated,)
     def get(self, request, file_id, format=None):
         upload = get_object_or_404(Upload, file_id=file_id)
         response = HttpResponse(upload.file, content_type='image/jpeg')
         response['Content-Disposition'] = f'attachment; filename="{upload.file.name}"'
         return response
 
+        # def get(self, request, file_id, format=None):
+        #     upload = get_object_or_404(Upload, file_id=file_id)
+
+        #     download_url = reverse('Download', args=[file_id])
+        #     response_data = {
+        #         'file_name': upload.file.name,
+        #         'download_url': request.build_absolute_uri(download_url),
+        #     }
+
+        #     return Response(response_data)
+        
+        
 
 
 
