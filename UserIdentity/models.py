@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserRole(models.Model):
-    role_id=models.CharField(max_length=100)
+    role_id=models.AutoField(primary_key=True) 
     role_name= models.CharField(max_length=100)
     description= models.TextField()
 
